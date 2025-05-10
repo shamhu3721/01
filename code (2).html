@@ -1,0 +1,723 @@
+<!DOCTYPE html>
+<html lang="ca">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tema 6A: Nous Mons, Antigues Cultures</title>
+    <script src="https://cdn.tailwindcss.com/3.4.1"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/framer-motion/10.16.4/framer-motion.umd.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        body {
+            background-color: #0A0A23;
+            color: #E0E0E0;
+            font-family: 'Inter', sans-serif;
+            overflow-x: hidden;
+        }
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;700;900&display=swap');
+
+        .bento-item {
+            background-color: rgba(20, 20, 50, 0.6);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(0, 255, 255, 0.2);
+            border-radius: 1rem;
+            padding: 1.5rem;
+            transition: transform 0.3s ease-out, box-shadow 0.3s ease-out;
+            position: relative; /* Needed for positioning notes area if desired */
+        }
+        .bento-item:hover {
+            transform: translateY(-5px) scale(1.02);
+            box-shadow: 0 0 25px rgba(0, 255, 255, 0.3);
+        }
+        .chinese-translation {
+            display: none;
+            font-size: 0.9em;
+            color: #a0aec0;
+            margin-top: 0.25rem;
+            font-weight: 300;
+        }
+        .catalan-text {
+            color: #cbd5e0;
+        }
+        .highlight-cyan { color: #00FFFF; }
+        .highlight-magenta { color: #FF00FF; }
+        .highlight-lime { color: #39FF14; }
+
+        .title-deco-cat {
+            font-size: 1.2rem;
+            font-weight: 300;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: rgba(0, 255, 255, 0.6);
+            margin-bottom: 0.25rem;
+        }
+        .title-main-cn {
+            font-size: 3rem; 
+            font-weight: 900; 
+            line-height: 1.1;
+             background: linear-gradient(90deg, #00FFFF, #FF00FF);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 1rem;
+        }
+        @media (min-width: 768px) {
+            .title-main-cn {
+                font-size: 4.5rem;
+            }
+        }
+
+        .page-indicator {
+            position: fixed;
+            top: 1rem;
+            right: 1rem;
+            background-color: rgba(20, 20, 50, 0.8);
+            color: #00FFFF;
+            padding: 0.5rem 1rem;
+            border-radius: 0.5rem;
+            font-size: 0.9rem;
+            z-index: 50;
+        }
+
+        .fm-initial-fallback {
+            opacity: 1 !important;
+            transform: translateY(0px) !important;
+        }
+
+        /* Notes Styles */
+        .notes-section {
+            margin-top: 1.5rem;
+            padding-top: 1rem;
+            border-top: 1px solid rgba(0, 255, 255, 0.1);
+        }
+        .notes-textarea {
+            width: 100%;
+            min-height: 80px;
+            background-color: rgba(0,0,0,0.3);
+            border: 1px solid rgba(0, 255, 255, 0.3);
+            color: #E0E0E0;
+            padding: 0.75rem;
+            border-radius: 0.5rem;
+            font-size: 0.9rem;
+            resize: vertical; /* Allow vertical resizing */
+        }
+        .notes-textarea:focus {
+            outline: none;
+            border-color: #00FFFF;
+            box-shadow: 0 0 10px rgba(0, 255, 255, 0.5);
+        }
+        .notes-label {
+            display: block;
+            font-size: 0.9rem;
+            color: #00FFFF;
+            margin-bottom: 0.5rem;
+            font-weight: bold;
+        }
+
+    </style>
+</head>
+<body class="min-h-screen">
+
+    <div class="page-indicator">Pàgina <span id="currentPage">1</span> | 9</div>
+
+    <div class="fixed top-4 left-4 z-50">
+        <button id="toggleTranslationBtn" class="bg-gradient-to-r from-cyan-500 to-purple-600 hover:from-cyan-600 hover:to-purple-700 text-white font-bold py-2 px-4 rounded-lg shadow-lg transition-all duration-300 ease-in-out">
+            <i class="fas fa-language mr-2"></i> <span id="toggleBtnText">Mostrar Traducció (显示翻译)</span>
+        </button>
+    </div>
+
+    <div class="container mx-auto px-4 py-16">
+
+        <!-- Section: Main Title (No notes here typically) -->
+        <section class="text-center mb-24 fm-initial" data-page="1" data-note-id="main-title-notes">
+            <h2 class="title-deco-cat">Tema 6A</h2>
+            <h1 class="title-main-cn">新世界，旧文化</h1>
+            <p class="text-xl text-slate-300 mt-2">
+                <span class="catalan-text">Nous Mons, Antigues Cultures</span><br>
+                <span class="chinese-translation">新世界，旧文化</span>
+            </p>
+            <p class="text-lg text-slate-400 mt-4">
+                <span class="catalan-text">L’inici de l’Edat Mitjana</span><br>
+                <span class="chinese-translation">中世纪的开端</span>
+            </p>
+            <!-- Notes Section for Main Title -->
+            <div class="notes-section">
+                <label for="notes-main-title-notes" class="notes-label"><i class="fas fa-pencil-alt mr-2"></i>笔记 (Notes):</label>
+                <textarea id="notes-main-title-notes" class="notes-textarea" placeholder="在此处添加您的笔记..."></textarea>
+            </div>
+        </section>
+
+        <!-- Unit 1 -->
+        <section class="mb-20 fm-initial" data-page="1">
+            <div class="text-center mb-12">
+                <p class="title-deco-cat">Unitat 1</p>
+                <h2 class="title-main-cn">近代欧洲变迁</h2>
+                <p class="text-lg text-slate-400">
+                    <span class="catalan-text">Com va canviar Europa a l'Edat Moderna?</span><br>
+                    <span class="chinese-translation">近代欧洲如何变迁？</span>
+                </p>
+                <p class="text-sm text-slate-500 mt-1">
+                    <span class="catalan-text">Situar en l'espai i el temps. Interpretar la multicausalitat</span><br>
+                    <span class="chinese-translation">时空定位与多因解读</span>
+                </p>
+            </div>
+
+            <div class="grid md:grid-cols-2 gap-6">
+                <div class="bento-item md:col-span-2" data-note-id="u1-context-general">
+                    <h3 class="text-2xl font-bold highlight-cyan mb-3">
+                        <i class="fas fa-chart-line mr-2"></i>
+                        <span class="catalan-text">Context General</span><br>
+                        <span class="chinese-translation">宏观背景</span>
+                    </h3>
+                    <p class="text-justify">
+                        <span class="catalan-text">A la segona meitat del segle XV, Europa va iniciar una fase de creixement econòmic, d'enriquiment de la burgesia i d'enfortiment de les monarquies.</span>
+                        <span class="chinese-translation">十五世纪下半叶，欧洲开启了经济增长、资产阶级致富和君主制强化的新阶段。</span>
+                    </p>
+                    <p class="mt-2 text-justify">
+                        <span class="catalan-text">Els canvis van ser causats en gran part per l'auge del comerç, que va impulsar l'exploració de noves rutes marítimes i territoris. Així va començar la primera globalització de l'economia.</span>
+                        <span class="chinese-translation">这些变革主要由贸易繁荣推动，促进了新航路和新领土的探索。经济的第一次全球化由此开始。</span>
+                    </p>
+                    <div class="notes-section">
+                        <label for="notes-u1-context-general" class="notes-label"><i class="fas fa-pencil-alt mr-2"></i>笔记 (Notes):</label>
+                        <textarea id="notes-u1-context-general" class="notes-textarea" placeholder="关于宏观背景的笔记..."></textarea>
+                    </div>
+                </div>
+
+                <div class="bento-item" data-note-id="u1-desenvolupament-comerc">
+                    <h3 class="text-2xl font-bold highlight-lime mb-3">
+                        <i class="fas fa-ship mr-2"></i>
+                        <span class="catalan-text">EL DESENVOLUPAMENT DEL COMERÇ</span><br>
+                        <span class="chinese-translation">商业发展</span>
+                    </h3>
+                    <p class="text-sm">
+                        <span class="catalan-text">La desaparició de les grans epidèmies, el descens de la mortalitat i l'augment de la natalitat van permetre l'increment de la població. Segons les fonts, l'any 1500 Europa tenia una població d'entre 70 i 90 milions d'habitants.</span>
+                        <span class="chinese-translation">大型瘟疫的消失、死亡率的下降和出生率的上升使得人口增加。据资料记载，1500年欧洲人口在7000万至9000万之间。</span>
+                    </p>
+                     <p class="mt-2 text-sm">
+                        <span class="catalan-text">El creixement de la demanda va fer necessari posar en conreu noves terres i millorar-ne el rendiment. Amb el temps van començar a generar-se excedents agrícoles que podien comercialitzar-se en fires i mercats.</span>
+                        <span class="chinese-translation">需求的增长使得开垦新土地和提高产量成为必要。随着时间的推移，开始出现农业剩余，可以在集市和市场上进行交易。</span>
+                    </p>
+                    <p class="mt-2 text-sm">
+                        <span class="catalan-text">El comerç terrestre es va revitalitzar i pels camins d'Europa circulaven les sedes italianes, la llana de Castella, els draps dels Països Baixos i Anglaterra, els metalls alemanys i els vins francesos.</span>
+                        <span class="chinese-translation">陆路贸易复苏，意大利丝绸、卡斯蒂利亚羊毛、荷兰和英国的呢绒、德国金属以及法国葡萄酒在欧洲的道路上流通。</span>
+                    </p>
+                     <p class="mt-2 text-sm">
+                        <span class="catalan-text">Les millores en la navegació van impulsar les rutes comercials marítimes al Mediterrani, el Bàltic i el mar del Nord. L'auge del comerç va estimular la producció artesanal, el desenvolupament de les manufactures i el creixement de les ciutats, sobretot els ports marítims o fluvials.</span>
+                        <span class="chinese-translation">航海技术的改进推动了地中海、波罗的海和北海的海上贸易路线。贸易的繁荣刺激了手工业生产、制造业发展和城市（尤其是海港或河港城市）的增长。</span>
+                    </p>
+                    <p class="mt-2 text-sm">
+                        <span class="catalan-text">La necessitat de capitals per finançar els viatges i la compra de mercaderies va comportar l'auge de la banca. Prestadors i canvistes es van convertir en el grup social més important de les ciutats.</span>
+                        <span class="chinese-translation">为旅行和购买商品融资的资本需求导致了银行业的兴起。放贷者和货币兑换商成为城市中最重要的社会群体。</span>
+                    </p>
+                    <p class="mt-2 text-sm">
+                        <span class="catalan-text">Els prestadors prestaven capital als comerciants per emprendre els seus viatges, i aquests el retornaven amb un interès una vegada tornaven del viatge.</span>
+                        <span class="chinese-translation">放贷者向商人提供资本以进行旅行，商人在旅行归来后连同利息一并归还。</span>
+                    </p>
+                    <p class="mt-2 text-sm">
+                        <span class="catalan-text">Els canvistes facilitaven canvi de moneda dels diferents països i cobraven una comissió per la transacció.</span>
+                        <span class="chinese-translation">货币兑换商为不同国家的货币兑换提供便利，并为此收取手续费。</span>
+                    </p>
+                    <div class="notes-section">
+                        <label for="notes-u1-desenvolupament-comerc" class="notes-label"><i class="fas fa-pencil-alt mr-2"></i>笔记 (Notes):</label>
+                        <textarea id="notes-u1-desenvolupament-comerc" class="notes-textarea" placeholder="关于商业发展的笔记..."></textarea>
+                    </div>
+                </div>
+
+                <div class="bento-item" data-page="2" data-note-id="u1-auge-burgesia">
+                    <h3 class="text-2xl font-bold highlight-magenta mb-3">
+                        <i class="fas fa-landmark mr-2"></i>
+                        <span class="catalan-text">L'AUGE DE LA BURGESIA</span><br>
+                        <span class="chinese-translation">资产阶级的崛起</span>
+                    </h3>
+                    <p class="text-sm">
+                        <span class="catalan-text">La burgesia basava el seu poder econòmic en la possessió de capital, que invertia en activitats econòmiques (viatges comercials, manufactures, banca...) amb la finalitat d'obtenir beneficis. Així van sorgir les primeres empreses capitalistes i es van afermar les bases del capitalisme comercial, en què els intercanvis comercials es van convertir en una gran font de riquesa.</span>
+                        <span class="chinese-translation">资产阶级的经济实力基于其拥有的资本，他们将资本投资于经济活动（商业旅行、制造业、银行业等）以获取利润。由此产生了最早的资本主义企业，并巩固了商业资本主义的基础，商业交换成为巨大的财富来源。</span>
+                    </p>
+                    <p class="mt-2 text-sm">
+                        <span class="catalan-text">Algunes famílies de comerciants i banquers, com els Mèdici a Florència i els Fugger a Augsburg, van acumular grans fortunes que els van permetre exercir molta influència política.</span>
+                        <span class="chinese-translation">一些商人和银行家家族，如佛罗伦萨的美第奇家族和奥格斯堡的富格尔家族，积累了巨额财富，使他们能够施加巨大的政治影响。</span>
+                    </p>
+                    <div class="mt-4 p-3 bg-black/30 rounded-md border border-slate-700">
+                        <p class="text-xs text-slate-400 italic">
+                            <i class="fas fa-user-tie mr-1"></i>
+                            <span class="catalan-text">Jakob Fugger (1459-1525), dit el Ric, pertanyia a una família d'empresaris alemanys i va crear la banca més gran d'Europa amb sucursals en moltes ciutats. Tenia clients de l'alta noblesa, l'Església i les monarquies, als quals finançava, i va aprofitar la seva influència per acumular una gran fortuna.</span><br>
+                            <span class="chinese-translation">雅各布·富格尔（Jakob Fugger，1459-1525年），人称“富人”，出身于德国企业家家族，创建了欧洲最大的银行，在许多城市设有分支机构。他的客户包括高级贵族、教会和君主，他为他们提供资金，并利用其影响力积累了巨额财富。</span>
+                        </p>
+                        <p class="text-xs text-slate-500 mt-1">
+                            <span class="catalan-text">Fugger a la seva oficina amb el seu comptable. Il·lustració anònima del 1517.</span><br>
+                            <span class="chinese-translation">富格尔在他的办公室与他的会计师。1517年的匿名插图。</span>
+                        </p>
+                    </div>
+                    <div class="notes-section">
+                        <label for="notes-u1-auge-burgesia" class="notes-label"><i class="fas fa-pencil-alt mr-2"></i>笔记 (Notes):</label>
+                        <textarea id="notes-u1-auge-burgesia" class="notes-textarea" placeholder="关于资产阶级崛起的笔记..."></textarea>
+                    </div>
+                </div>
+
+                <div class="bento-item md:col-span-2" data-page="2" data-note-id="u1-enfortiment-monarquia">
+                     <h3 class="text-2xl font-bold highlight-cyan mb-3">
+                        <i class="fas fa-crown mr-2"></i>
+                        <span class="catalan-text">L'ENFORTIMENT DE LA MONARQUIA</span><br>
+                        <span class="chinese-translation">君权强化</span>
+                    </h3>
+                    <p class="text-sm text-justify">
+                        <span class="catalan-text">Durant el segle XV, els reis, que a l'Edat Mitjana havien vist disminuir el seu poder en favor de la noblesa feudal, van aconseguir imposar-s'hi. Van arribar a centralitzar el poder i van començar a prescindir dels parlaments per governar. Es va consolidar així un nou model d'organització del poder: la monarquia autoritària.</span>
+                        <span class="chinese-translation">十五世纪期间，中世纪时权力因封建贵族而削弱的国王们成功地确立了自己的权威。他们集中了权力，并开始绕过议会进行统治。一种新的权力组织模式——专制君主制——由此得到巩固。</span>
+                    </p>
+                    <p class="mt-2 text-sm">
+                         <span class="catalan-text">A través del Mediterrani arribaven a Europa les espècies d'Orient, utilitzades per conservar els aliments i molt apreiades com a condiment. Tenien també un ús medicinal i cosmètic.</span>
+                        <span class="chinese-translation">通过地中海，东方的香料抵达欧洲，用于保存食物并作为调味品备受珍视。它们还有药用和美容用途。</span>
+                    </p>
+                    <div class="notes-section">
+                        <label for="notes-u1-enfortiment-monarquia" class="notes-label"><i class="fas fa-pencil-alt mr-2"></i>笔记 (Notes):</label>
+                        <textarea id="notes-u1-enfortiment-monarquia" class="notes-textarea" placeholder="关于君权强化的笔记..."></textarea>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <section class="mb-20 fm-initial" data-page="3" data-note-id="u1-consolidacio-poder">
+            <div class="bento-item">
+                <h3 class="text-2xl font-bold highlight-lime mb-3">
+                    <i class="fas fa-gavel mr-2"></i>
+                    <span class="catalan-text">Consolidació del Poder Monàrquic</span><br>
+                    <span class="chinese-translation">君权巩固</span>
+                </h3>
+                <p class="text-sm text-justify">
+                    <span class="catalan-text">Per afermar-la, els monarques van crear exèrcits permanents i van instaurar una burocràcia i una Hisenda que controlaven l'administració i les finances del regne. També van crear una diplomàcia que va establir relacions entre països aliats.</span>
+                    <span class="chinese-translation">为了巩固权力，君主们建立了常备军，并设立了控制王国行政和财政的官僚机构和财政部。他们还建立了外交体系，以处理盟国之间的关系。</span>
+                </p>
+                <p class="mt-2 text-sm">
+                    <span class="catalan-text">Els Reis Catòlics a la Corona de Castella, Francesc I a França i Enric VIII a Anglaterra són exemples de monarquies autoritàries.</span>
+                    <span class="chinese-translation">卡斯蒂利亚王国的“天主教双王”、法国的弗朗索瓦一世和英国的亨利八世都是专制君主制的例子。</span>
+                </p>
+                <div class="notes-section">
+                    <label for="notes-u1-consolidacio-poder" class="notes-label"><i class="fas fa-pencil-alt mr-2"></i>笔记 (Notes):</label>
+                    <textarea id="notes-u1-consolidacio-poder" class="notes-textarea" placeholder="关于君权巩固的笔记..."></textarea>
+                </div>
+            </div>
+        </section>
+
+        <!-- Unit 2 -->
+        <section class="mb-20 fm-initial" data-page="4">
+            <div class="text-center mb-12">
+                <p class="title-deco-cat">Unitat 2</p>
+                <h2 class="title-main-cn">天主教双王的君主国</h2>
+                 <p class="text-lg text-slate-400">
+                    <span class="catalan-text">Quina nova monarquia van crear els Reis Catòlics?</span><br>
+                    <span class="chinese-translation">天主教双王创建了怎样的新君主国？</span>
+                </p>
+                <p class="text-sm text-slate-500 mt-1">
+                    <span class="catalan-text">Pensar críticament. Reconèixer la multiculturalitat. Posar-se en la seva mentalitat.</span><br>
+                    <span class="chinese-translation">批判性思维，认识多元文化，设身处地思考。</span>
+                </p>
+            </div>
+
+            <div class="grid md:grid-cols-3 gap-6">
+                <div class="bento-item md:col-span-2" data-note-id="u2-monarquia-hispanica">
+                    <h3 class="text-2xl font-bold highlight-cyan mb-3">
+                        <i class="fas fa-link mr-2"></i>
+                        <span class="catalan-text">Isabel i Ferran: La Monarquia Hispànica</span><br>
+                        <span class="chinese-translation">伊莎贝尔与费尔南多：西班牙君主国</span>
+                    </h3>
+                    <p class="text-sm">
+                        <span class="catalan-text">Isabel de Castella i Ferran d'Aragó eren hereus de les dues corones peninsulars més grans. Després del seu matrimoni el 1469, la seva pujada al tron el 1479 va originar una nova entitat política: la monarquia hispànica.</span>
+                        <span class="chinese-translation">卡斯蒂利亚的伊莎贝尔和阿拉贡的费尔南多是伊比利亚半岛两个最大王国的继承人。他们在1469年结婚后，于1479年登基，由此产生了一个新的政治实体：西班牙君主国。</span>
+                    </p>
+                    <p class="mt-2 text-sm text-justify">
+                        <span class="catalan-text">La unió d'Isabel i Ferran va ser una unió dinàstica, que no va comportar la creació d'un únic regne. Segons els acords pactats, totes dues corones s'administraven de manera conjunta, però mantenien les seves fronteres, el seu propi monarca, la seva moneda, el seu sistema fiscal, les seves lleis i les seves institucions. A més, no es va establir una capital i la cort havia de desplaçar-se on fossin els reis.</span>
+                        <span class="chinese-translation">伊莎贝尔和费尔南多的联合是一个王朝联合，并未导致单一王国的建立。根据协议，两个王国共同管理，但保留各自的边界、君主、货币、税收制度、法律和机构。此外，没有设立首都，宫廷随国王所在地而迁移。</span>
+                    </p>
+                    <div class="mt-4 p-3 bg-black/30 rounded-md border border-slate-700">
+                        <p class="text-xs text-slate-400 italic">
+                            <i class="fas fa-paint-brush mr-1"></i>
+                            <span class="catalan-text">Els Reis Catòlics adorant la Mare de Déu i el Nen, taula del segle XV. El papa Alexandre VI els va concedir aquesta denominació arran de la unitat de fe que van imposar a Espanya.</span><br>
+                            <span class="chinese-translation">《天主教双王崇拜圣母子》，十五世纪木板画。教皇亚历山大六世因他们在西班牙强加的信仰统一而授予他们此称号。</span>
+                        </p>
+                    </div>
+                    <div class="notes-section">
+                        <label for="notes-u2-monarquia-hispanica" class="notes-label"><i class="fas fa-pencil-alt mr-2"></i>笔记 (Notes):</label>
+                        <textarea id="notes-u2-monarquia-hispanica" class="notes-textarea" placeholder="关于西班牙君主国的笔记..."></textarea>
+                    </div>
+                </div>
+                <div class="bento-item" data-note-id="u2-expansio-peninsular">
+                     <h3 class="text-2xl font-bold highlight-magenta mb-3">
+                        <i class="fas fa-map-marked-alt mr-2"></i>
+                        <span class="catalan-text">Expansió Peninsular</span><br>
+                        <span class="chinese-translation">半岛扩张</span>
+                    </h3>
+                    <p class="text-sm">
+                        <span class="catalan-text">Durant el seu regnat (1479-1516), els Reis Catòlics van impulsar una política d'unificació territorial:</span>
+                        <span class="chinese-translation">在其统治期间（1479-1516年），天主教双王推行了领土统一政策：</span>
+                    </p>
+                    <ul class="list-disc list-inside text-sm space-y-1 mt-2">
+                        <li>
+                            <span class="catalan-text">Conquesta de Granada (1492).</span>
+                            <span class="chinese-translation">征服格拉纳达（1492年）。</span>
+                        </li>
+                         <li>
+                            <span class="catalan-text">Incorporació de Navarra (1515).</span>
+                            <span class="chinese-translation">合并纳瓦拉（1515年）。</span>
+                        </li>
+                        <li>
+                            <span class="catalan-text">Política matrimonial amb Portugal.</span>
+                            <span class="chinese-translation">与葡萄牙的联姻政策。</span>
+                        </li>
+                    </ul>
+                    <div class="notes-section">
+                        <label for="notes-u2-expansio-peninsular" class="notes-label"><i class="fas fa-pencil-alt mr-2"></i>笔记 (Notes):</label>
+                        <textarea id="notes-u2-expansio-peninsular" class="notes-textarea" placeholder="关于半岛扩张的笔记..."></textarea>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <section class="mb-20 fm-initial" data-page="5">
+            <div class="grid md:grid-cols-2 gap-6">
+                <div class="bento-item" data-note-id="u2-rendicio-granada">
+                    <h3 class="text-2xl font-bold highlight-lime mb-3">
+                        <i class="fas fa-landmark-flag mr-2"></i>
+                        <span class="catalan-text">LA RENDICIÓ DEL REI BOABDIL DE GRANADA</span><br>
+                        <span class="chinese-translation">格拉纳达国王博阿布迪尔的投降</span>
+                    </h3>
+                    <blockquote class="text-sm italic border-l-4 border-lime-500 pl-4 py-2 bg-black/20">
+                        <span class="catalan-text">El rei i la reina, després de veure la carta del rei Boabdil, van decidir anar a prendre l'Alhambra... “Preneu, senyor, les claus de la vostra ciutat, que jo i els que hi som dins som vostres”.</span>
+                        <span class="chinese-translation">国王和王后在看到博阿布迪尔国王的信后，决定去占领阿尔罕布拉宫……“陛下，请收下您城市的钥匙，我和城里的人都是您的了。”</span>
+                    </blockquote>
+                    <p class="text-xs text-slate-500 mt-1">
+                        <span class="catalan-text">A. Bernáldez: Història dels Reis Catòlics, 1488-1513.</span><br>
+                        <span class="chinese-translation">A. 贝尔纳尔德斯：《天主教双王史》，1488-1513年。</span>
+                    </p>
+                    <p class="text-xs text-slate-400 mt-2">
+                        <span class="catalan-text">Boabdil lliurant les claus del regne. Retaule Major de la Capella Reial de Granada, 1520-1522.</span><br>
+                        <span class="chinese-translation">博阿布迪尔交出王国钥匙。格拉纳达皇家礼拜堂主祭坛画，1520-1522年。</span>
+                    </p>
+                    <div class="notes-section">
+                        <label for="notes-u2-rendicio-granada" class="notes-label"><i class="fas fa-pencil-alt mr-2"></i>笔记 (Notes):</label>
+                        <textarea id="notes-u2-rendicio-granada" class="notes-textarea" placeholder="关于格拉纳达投降的笔记..."></textarea>
+                    </div>
+                </div>
+
+                <div class="bento-item" data-page="6" data-note-id="u2-uniformitat-religiosa">
+                    <h3 class="text-2xl font-bold highlight-cyan mb-3">
+                        <i class="fas fa-cross mr-2"></i>
+                        <span class="catalan-text">Uniformitat Religiosa</span><br>
+                        <span class="chinese-translation">宗教统一</span>
+                    </h3>
+                    <p class="text-sm">
+                        <span class="catalan-text">La unitat de tots els habitants sota una mateixa creença religiosa, el catolicisme, va ser un objectiu prioritari de la monarquia...</span>
+                        <span class="chinese-translation">使所有居民统一信仰天主教，是君主国的首要目标……</span>
+                    </p>
+                    <ul class="list-disc list-inside text-sm space-y-1 mt-2">
+                        <li>
+                            <span class="catalan-text">1478: Tribunal de la Inquisició.</span>
+                            <span class="chinese-translation">1478年：宗教裁判所。</span>
+                        </li>
+                        <li>
+                            <span class="catalan-text">1492: Expulsió dels jueus no conversos.</span>
+                            <span class="chinese-translation">1492年：驱逐未皈依的犹太人。</span>
+                        </li>
+                         <li>
+                            <span class="catalan-text">1502: Conversió o expulsió dels musulmans (moriscos).</span>
+                            <span class="chinese-translation">1502年：穆斯林（摩里斯科人）皈依或被驱逐。</span>
+                        </li>
+                    </ul>
+                    <blockquote class="mt-4 text-sm italic border-l-4 border-cyan-500 pl-4 py-2 bg-black/20">
+                        <h4 class="font-semibold not-italic text-base text-cyan-300 mb-1">
+                            <span class="catalan-text">COM VA SER LA DIÀSPORA JUEVA?</span><br>
+                            <span class="chinese-translation">犹太人大流散是怎样的？</span>
+                        </h4>
+                        <span class="catalan-text">Van sortir de les terres del seu naixement, nois i grans, vells i nens, a peu, amb rucs i altres bèsties...</span>
+                        <span class="chinese-translation">他们离开了故土，男女老少，步行或骑着驴子和其他牲畜……</span>
+                    </blockquote>
+                     <p class="text-xs text-slate-500 mt-1">
+                        <span class="catalan-text">A. Bernáldez: Història dels Reis Catòlics, 1488-1513.</span><br>
+                        <span class="chinese-translation">A. 贝尔纳尔德斯：《天主教双王史》，1488-1513年。</span>
+                    </p>
+                    <div class="notes-section">
+                        <label for="notes-u2-uniformitat-religiosa" class="notes-label"><i class="fas fa-pencil-alt mr-2"></i>笔记 (Notes):</label>
+                        <textarea id="notes-u2-uniformitat-religiosa" class="notes-textarea" placeholder="关于宗教统一的笔记..."></textarea>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Unit 3 -->
+        <section class="mb-20 fm-initial" data-page="7">
+            <div class="text-center mb-12">
+                <p class="title-deco-cat">Unitat 3</p>
+                <h2 class="title-main-cn">专制君主制的组织</h2>
+                <p class="text-lg text-slate-400">
+                    <span class="catalan-text">Com es va organitzar la monarquia autoritària?</span><br>
+                    <span class="chinese-translation">专制君主制是如何组织的？</span>
+                </p>
+                 <p class="text-sm text-slate-500 mt-1">
+                    <span class="catalan-text">Situar en l'espai i el temps. Analitzar processos històrics.</span><br>
+                    <span class="chinese-translation">时空定位，分析历史进程。</span>
+                </p>
+            </div>
+
+            <div class="grid md:grid-cols-2 gap-6">
+                 <div class="bento-item md:col-span-2" data-note-id="u3-nova-monarquia">
+                    <h3 class="text-2xl font-bold highlight-magenta mb-3">
+                        <i class="fas fa-chess-king mr-2"></i>
+                        <span class="catalan-text">La Nova Monarquia Autoritària</span><br>
+                        <span class="chinese-translation">新的专制君主制</span>
+                    </h3>
+                    <p class="text-sm">
+                        <span class="catalan-text">Els Reis Catòlics van imposar l'autoritat reial a tots els territoris i sobre tots els grups socials...</span>
+                        <span class="chinese-translation">天主教双王在所有领土和所有社会群体中确立了王室权威……</span>
+                    </p>
+                    <div class="mt-3 grid sm:grid-cols-2 gap-4">
+                        <div>
+                            <h4 class="font-semibold text-lime-400">
+                                <span class="catalan-text">A LA CORONA DE CASTELLA:</span>
+                                <span class="chinese-translation">在卡斯蒂利亚王国：</span>
+                            </h4>
+                            <ul class="list-disc list-inside text-xs space-y-1">
+                                <li><span class="catalan-text">Limitació del poder nobiliari.</span><span class="chinese-translation">限制贵族权力。</span></li>
+                                <li><span class="catalan-text">Establiment del mayorazgo (Lleis de Toro, 1505).</span><span class="chinese-translation">建立长子继承制（托罗法案，1505年）。</span></li>
+                            </ul>
+                        </div>
+                        <div>
+                             <h4 class="font-semibold text-lime-400">
+                                <span class="catalan-text">A LA CORONA D'ARAGÓ:</span>
+                                <span class="chinese-translation">在阿拉贡王国：</span>
+                            </h4>
+                            <ul class="list-disc list-inside text-xs space-y-1">
+                                <li><span class="catalan-text">Restricció del monopoli oligàrquic (insaculació).</span><span class="chinese-translation">限制寡头垄断（抽签任职制）。</span></li>
+                                <li><span class="catalan-text">Sentència Arbitral de Guadalupe (abolició mals usos).</span><span class="chinese-translation">瓜达卢佩仲裁裁决（废除恶习）。</span></li>
+                                <li><span class="catalan-text">Manteniment del pactisme i les institucions medievals.</span><span class="chinese-translation">维持契约主义和中世纪制度。</span></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="mt-4 p-3 bg-black/30 rounded-md border border-slate-700">
+                        <h4 class="font-semibold text-base text-lime-300 mb-1">
+                            <span class="catalan-text">QUÈ VA ESTABLIR LA SENTÈNCIA ARBITRAL DE GUADALUPE?</span><br>
+                            <span class="chinese-translation">瓜达卢佩仲裁裁决规定了什么？</span>
+                        </h4>
+                        <ul class="list-disc list-inside text-xs space-y-1 text-slate-400">
+                            <li><span class="catalan-text">Eliminació dels mals usos.</span><span class="chinese-translation">废除恶习。</span></li>
+                            <li><span class="catalan-text">Abolició del dret de remença.</span><span class="chinese-translation">废除人身依附赎金权。</span></li>
+                            <li><span class="catalan-text">Generalització del contracte d'emfiteusi.</span><span class="chinese-translation">推广永佃制合同。</span></li>
+                        </ul>
+                    </div>
+                     <div class="notes-section">
+                        <label for="notes-u3-nova-monarquia" class="notes-label"><i class="fas fa-pencil-alt mr-2"></i>笔记 (Notes):</label>
+                        <textarea id="notes-u3-nova-monarquia" class="notes-textarea" placeholder="关于新的专制君主制的笔记..."></textarea>
+                    </div>
+                 </div>
+
+                <div class="bento-item" data-page="8" data-note-id="u3-institucions-govern">
+                    <h3 class="text-2xl font-bold highlight-cyan mb-3">
+                        <i class="fas fa-university mr-2"></i>
+                        <span class="catalan-text">Noves Institucions de Govern</span><br>
+                        <span class="chinese-translation">新的治理机构</span>
+                    </h3>
+                    <ul class="list-disc list-inside text-sm space-y-1">
+                        <li><span class="catalan-text">Consell Reial</span><span class="chinese-translation">皇家委员会</span></li>
+                        <li><span class="catalan-text">Reial Audiència (justícia)</span><span class="chinese-translation">皇家审问院（司法）</span></li>
+                        <li><span class="catalan-text">Comptadoria Reial d'Hisenda (impostos)</span><span class="chinese-translation">皇家财政审计署（税收）</span></li>
+                        <li><span class="catalan-text">Santa Hermandad (seguretat)</span><span class="chinese-translation">神圣兄弟会（治安）</span></li>
+                        <li><span class="catalan-text">Corregidors (delegats reials)</span><span class="chinese-translation">市长（国王代表）</span></li>
+                        <li><span class="catalan-text">Exèrcit permanent i ambaixadors</span><span class="chinese-translation">常备军与大使</span></li>
+                        <li><span class="catalan-text">Virrei (representant reial)</span><span class="chinese-translation">总督（国王代表）</span></li>
+                        <li><span class="catalan-text">Corts (protagonisme reduït)</span><span class="chinese-translation">议会（作用减弱）</span></li>
+                    </ul>
+                    <div class="notes-section">
+                        <label for="notes-u3-institucions-govern" class="notes-label"><i class="fas fa-pencil-alt mr-2"></i>笔记 (Notes):</label>
+                        <textarea id="notes-u3-institucions-govern" class="notes-textarea" placeholder="关于新的治理机构的笔记..."></textarea>
+                    </div>
+                </div>
+                <div class="bento-item" data-note-id="u3-politica-exterior">
+                    <h3 class="text-2xl font-bold highlight-magenta mb-3">
+                        <i class="fas fa-globe-europe mr-2"></i>
+                        <span class="catalan-text">Política Exterior</span><br>
+                        <span class="chinese-translation">外交政策</span>
+                    </h3>
+                     <ul class="list-disc list-inside text-sm space-y-1">
+                        <li>
+                            <span class="catalan-text">CAP AL MEDITERRANI: Recuperació Rosselló i Cerdanya, conquesta Nàpols, ports nord-africans.</span>
+                            <span class="chinese-translation">地中海方向：收复鲁西永和塞尔达尼亚，征服那不勒斯，北非港口。</span>
+                        </li>
+                        <li>
+                            <span class="catalan-text">CAP A L'ATLÀNTIC: Consolidació Canàries, suport a Colom (Amèrica).</span>
+                            <span class="chinese-translation">大西洋方向：巩固加那利群岛，支持哥伦布（美洲）。</span>
+                        </li>
+                         <li>
+                            <span class="catalan-text">A EUROPA: Enllaços matrimonials (Sacre Imperi, Anglaterra, Portugal).</span>
+                            <span class="chinese-translation">欧洲方向：与神圣罗马帝国、英国、葡萄牙联姻。</span>
+                        </li>
+                    </ul>
+                    <div class="notes-section">
+                        <label for="notes-u3-politica-exterior" class="notes-label"><i class="fas fa-pencil-alt mr-2"></i>笔记 (Notes):</label>
+                        <textarea id="notes-u3-politica-exterior" class="notes-textarea" placeholder="关于外交政策的笔记..."></textarea>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="fm-initial" data-page="9" data-note-id="u3-expansio-territorial">
+             <div class="bento-item">
+                <h3 class="text-2xl font-bold highlight-lime mb-3">
+                    <i class="fas fa-expand-arrows-alt mr-2"></i>
+                    <span class="catalan-text">L'EXPANSIÓ TERRITORIAL DE LA MONARQUIA</span><br>
+                    <span class="chinese-translation">君主国的领土扩张</span>
+                </h3>
+                <div class="grid md:grid-cols-2 gap-4 items-center">
+                    <div>
+                        <p class="text-xs text-slate-400 italic">
+                            <i class="fas fa-image mr-1"></i>
+                            <span class="catalan-text">Pintura de Juan de Borgoña que representa la conquesta d'Orà, segle XVI.</span><br>
+                            <span class="chinese-translation">胡安·德·博尔戈尼亚所绘《征服奥兰图》，十六世纪。</span>
+                        </p>
+                    </div>
+                     <div>
+                        <p class="text-xs text-slate-400 italic">
+                            <i class="fas fa-building mr-1"></i>
+                            <span class="catalan-text">Palau del Lloctinent de Barcelona. Va ser la residència dels virreis de Catalunya, i seu de la Inquisició i de l'Audiència.</span><br>
+                            <span class="chinese-translation">巴塞罗那总督府。曾是加泰罗尼亚总督的住所，也是宗教裁判所和审问院的所在地。</span>
+                        </p>
+                    </div>
+                </div>
+                <div class="notes-section">
+                    <label for="notes-u3-expansio-territorial" class="notes-label"><i class="fas fa-pencil-alt mr-2"></i>笔记 (Notes):</label>
+                    <textarea id="notes-u3-expansio-territorial" class="notes-textarea" placeholder="关于领土扩张的笔记..."></textarea>
+                </div>
+            </div>
+        </section>
+
+    </div> <!-- End container -->
+
+    <script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const motion = window.motion; 
+
+        // Toggle Translation Functionality
+        const toggleBtn = document.getElementById('toggleTranslationBtn');
+        const toggleBtnText = document.getElementById('toggleBtnText');
+        const chineseTranslations = document.querySelectorAll('.chinese-translation');
+        let translationsVisible = false;
+
+        if (toggleBtn) {
+            toggleBtn.addEventListener('click', () => {
+                translationsVisible = !translationsVisible;
+                chineseTranslations.forEach(el => {
+                    el.style.display = translationsVisible ? 'block' : 'none';
+                });
+                if (toggleBtnText) {
+                    toggleBtnText.textContent = translationsVisible ? 'Ocultar Traducció (隐藏翻译)' : 'Mostrar Traducció (显示翻译)';
+                } else {
+                    console.error("Element with ID 'toggleBtnText' not found.");
+                }
+            });
+        } else {
+            console.error("Element with ID 'toggleTranslationBtn' not found.");
+        }
+
+        // Animation and Page Indicator Functionality
+        const animatedElements = document.querySelectorAll('.fm-initial');
+        const currentPageSpan = document.getElementById('currentPage');
+
+        if (motion) { 
+            console.log("Framer Motion loaded. Initializing animations.");
+            const observerOptions = {
+                root: null,
+                rootMargin: '0px',
+                threshold: 0.1
+            };
+
+            const observerCallback = (entries, obs) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        motion.animate(
+                            entry.target,
+                            { opacity: 1, y: 0 },
+                            { duration: 0.8, delay: 0.2, ease: "easeOut" }
+                        );
+                        
+                        const page = entry.target.dataset.page;
+                        if (page && currentPageSpan) {
+                            currentPageSpan.textContent = page;
+                        }
+                        obs.unobserve(entry.target); 
+                    }
+                });
+            };
+
+            const observer = new IntersectionObserver(observerCallback, observerOptions);
+
+            animatedElements.forEach(el => {
+                motion.set(el, { opacity: 0, y: 50 }); 
+                observer.observe(el);
+            });
+
+        } else { 
+            console.warn("Framer Motion library (motion) not found. Animations will be skipped. Making content visible.");
+            animatedElements.forEach(el => {
+                el.style.opacity = 1;
+                el.style.transform = 'translateY(0px)';
+                el.classList.add('fm-initial-fallback');
+            });
+            if (currentPageSpan && animatedElements.length > 0) {
+                let initialPageSet = false;
+                const fallbackObserverOptions = { threshold: 0.1 };
+                const fallbackObserver = new IntersectionObserver((entries) => {
+                    entries.forEach(entry => {
+                        if (entry.isIntersecting) {
+                             const page = entry.target.dataset.page;
+                             if (page && currentPageSpan) {
+                                currentPageSpan.textContent = page;
+                             }
+                        }
+                    });
+                }, fallbackObserverOptions);
+                
+                animatedElements.forEach(el => fallbackObserver.observe(el));
+            }
+        }
+
+        // Notes Functionality
+        const noteSections = document.querySelectorAll('.bento-item, section[data-note-id]'); // Select all items that can have notes
+
+        noteSections.forEach(section => {
+            const noteIdAttribute = section.dataset.noteId;
+            if (!noteIdAttribute) return; // Skip if no data-note-id
+
+            const noteTextarea = section.querySelector(`#notes-${noteIdAttribute}`);
+            
+            if (noteTextarea) {
+                // Load saved note
+                const savedNote = localStorage.getItem(`note-${noteIdAttribute}`);
+                if (savedNote) {
+                    noteTextarea.value = savedNote;
+                }
+
+                // Save note on input
+                noteTextarea.addEventListener('input', () => {
+                    localStorage.setItem(`note-${noteIdAttribute}`, noteTextarea.value);
+                });
+            } else {
+                // console.warn(`Textarea for note ID 'notes-${noteIdAttribute}' not found in section:`, section);
+            }
+        });
+        // Special case for the main title notes, as it's a 'section' not a 'bento-item' by default
+        const mainTitleNoteSection = document.querySelector('section[data-note-id="main-title-notes"]');
+        if (mainTitleNoteSection) {
+            const mainTitleNoteTextarea = mainTitleNoteSection.querySelector('#notes-main-title-notes');
+            if (mainTitleNoteTextarea) {
+                 const savedMainTitleNote = localStorage.getItem('note-main-title-notes');
+                if (savedMainTitleNote) {
+                    mainTitleNoteTextarea.value = savedMainTitleNote;
+                }
+                mainTitleNoteTextarea.addEventListener('input', () => {
+                    localStorage.setItem('note-main-title-notes', mainTitleNoteTextarea.value);
+                });
+            }
+        }
+
+
+    });
+    </script>
+
+</body>
+</html>
